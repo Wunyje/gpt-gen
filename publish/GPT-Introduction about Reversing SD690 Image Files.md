@@ -78,17 +78,22 @@ and other images may also contain relevant information
 depending on their content
 and how they interact with each other
 or with external devices.
-#### 3.2.1 How to reverse in details
+#### 3.2.1 How to reverse in general?
 
 The general steps to reverse in details are as follows:
 
-1. Extract each image file from SD690 using tools such as fastboot or dd.
-2. Identify each image file's format using tools such as binwalk or file.
-3. Decompress or unpack each image file using tools such as simg2img or unsparse if needed.
-4. Disassemble each image file using tools such as IDA Pro or Ghidra if it contains executable code.
-5. Analyze each image file using tools such as hex editor or strings if it contains data or configuration information.
-6. Identify each image file's function using tools such as QEMU or Android emulator if it can be executed or loaded on a virtual device.
-7. Trace each image file's interaction with RH850 using tools such as JTAG or UART if it can be debugged or monitored on a physical device.
+**The first step** is to obtain the image files from the device. There are different ways to do this, such as using adb commands, extracting from OTA updates, or dumping from memory. The image files are usually located in /dev/block/bootdevice/by-name/ or /firmware/image/ directories on the device. The image files have names like boot.img, modem.img, dsp.img, etc.
+
+**The second step** is to analyze the image files and identify their format and structure. Some image files are encrypted or signed, and need to be decrypted or verified before they can be opened. Some image files are compressed or packed, and need to be decompressed or unpacked before they can be read. Some image files are split into multiple segments or partitions, and need to be concatenated or merged before they can be loaded.
+
+**The third step** is to load the image files into a disassembler or a debugger and start reversing them. Depending on the type of the image file, different tools may be needed. For example, boot.img contains the Linux kernel and initramfs, and can be reversed using tools like IDA Pro or Ghidra. Modem.img contains the modem firmware and can be reversed using tools like QCSuper or QXDM. Dsp.img contains the DSP firmware and can be reversed using tools like Hex-Rays Decompiler or radare2.
+
+**The fourth step** is to understand the functionality and logic of the image files and find interesting code or data. This may require some background knowledge of the Qualcomm SoC architecture and firmware design. Some useful resources are the Qualcomm Developer Network (QDN), the Code Aurora Forum (CAF), and various blogs and papers by security researchers. Some common tasks are finding system calls, finding encryption keys, finding debug messages, finding vulnerabilities, etc.
+
+**The fifth step** is to modify the image files and test them on the device. This may require some tools to re-encrypt, re-sign, re-compress, or re-pack the image files after modification. Some tools are available online, such as Magisk for boot.img or QPST for modem.img. Some tools may need to be developed by yourself, such as for dsp.img. Some modifications may require rooting the device or unlocking the bootloader.
+
+These are some general methods and procedures of reversing Qualcomm SD690's image files. They are not exhaustive or definitive, but rather a starting point for further exploration. Reversing Qualcomm SD690's image files can be challenging but rewarding, as it can reveal many secrets and possibilities of the device.
+
 
 
 In summary,
