@@ -22,62 +22,92 @@ Bluetooth penetration testing is a method of finding and exploiting security vul
 - Exploitation: Leveraging known or unknown vulnerabilities in the target device or application to gain unauthorized access or execute arbitrary code.
 - Post-exploitation: Performing further actions on the compromised device or application, such as stealing data, installing malware, escalating privileges, etc.
 
-### 2.1 How could it be implemented?
-Bluetooth penetration testing could be implemented by using various tools and techniques that are available for different platforms and purposes. Some of the common tools and techniques are:
+### 2.1 How could it be implemented on Android 10 device?
+To perform a Bluetooth penetration test on an Android 10 device, one needs to set up the pentesting environment first. This includes preparing the Android device and the local computer, unlocking the bootloader, rooting the device, installing custom recovery, enabling developer options and USB debugging, installing ADB (Android Debug Bridge) and Fastboot tools on the computer, connecting the device to the computer via USB cable or Wi-Fi. Then, one can use various tools and techniques to enumerate, analyze, manipulate, and exploit the Bluetooth functionality on the device.
+### 2.1.1 What tools are needed?
+Some of the tools that are useful for Bluetooth penetration testing on Android 10 device are:
 
-#### 2.1.1 What tools are needed?
-
-Some of the tools that are needed for Bluetooth penetration test are:
-
-- A Bluetooth adapter that supports monitor mode and packet injection
-- A computer or laptop that runs Linux OS with BlueZ software stack installed
-- A smartphone or tablet that runs Android OS with Bluetooth enabled
-- A target Bluetooth device or application that is within the range of the Bluetooth adapter
-- Tools for capturing and analyzing Bluetooth traffic, such as Wireshark, Ubertooth, Btlejack, etc.
-- Tools for discovering and enumerating Bluetooth devices and services, such as hcitool, sdptool, btscanner, bluelog, etc.
-- Tools for fuzzing and testing Bluetooth protocols and profiles, such as Scapy, Btlejuice, GATTacker, etc.
-- Tools for performing attacks on Bluetooth devices and applications, such as L2ping, L2cap-packet, Btcrack, Bluesnarfer, Bluebugger, etc.
-
-#### 2.1.2 How to use these tools individually or together? (Use examples to illustrate)
-
+- nRF Connect: An app that can scan for nearby BLE devices and services, read and write characteristics and descriptors, monitor notifications and indications, perform GATT operations, etc.
+- BLE Scanner: An app that can scan for nearby BLE devices and services, read and write characteristics and descriptors, monitor notifications and indications, etc.
+- Blue Hydra: A tool that can detect classic and BLE devices in range, collect information about them such as MAC address, name, vendor, RSSI (Received Signal Strength Indicator), etc., identify known devices from a database of previously seen devices, etc.
+- Btlejuice: A tool that can perform a man-in-the-middle attack on BLE connections between two devices, intercept and modify GATT traffic, clone BLE devices and services, etc.
+- Bettercap: A tool that can perform various network attacks on classic and BLE devices, such as ARP spoofing, DNS spoofing, HTTP proxying, SSL stripping, etc., as well as sniffing and injecting HCI packets.
+- Metasploit Framework: A tool that can perform various exploits on classic and BLE devices using modules such as bluetooth_version.rb (to get the version of the remote device), bluetooth_name.rb (to get or set the name of the remote device), bluetooth_pairing_pin.rb (to brute force the pairing PIN of the remote device), bluetooth_dos.rb (to perform a denial-of-service attack on the remote device), etc .
+### 2.1.1.1 How to use these tools individually or together? (Use examples to illustrate)
 Here are some examples of how to use these tools individually or together:
 
-- To capture and analyze Bluetooth traffic between an Android device and a target device using Wireshark and Ubertooth:
+- To scan for nearby BLE devices using nRF Connect or BLE Scanner app:
+  - Install and launch the app on the Android device
+  - Tap on SCAN button to start scanning
+  - Observe the list of detected devices with their names, MAC addresses,
+    RSSI values
+  - Tap on a device to see its services and characteristics
+  - Tap on a characteristic to read or write its value
+  - Enable notifications or indications if available
+- To detect classic and BLE devices using Blue Hydra:
+  - Install Blue Hydra on the local computer
+  - Connect a compatible Bluetooth dongle to the computer
+  - Run `sudo blue_hydra` command in a terminal
+  - Observe the output of detected devices with their names,
+    MAC addresses,
+    vendors,
+    RSSI values,
+    etc.
+  - Use `--web` option to launch a web interface for better visualization
+- To perform a man-in-the-middle attack on BLE connections using Btlejuice:
+  - Install Btlejuice on the local computer
+  - Connect two compatible Bluetooth dongles to the computer
+  - Run `sudo btlejuice-proxy` command in one terminal to start
+    proxying BLE traffic between two dongles
+  - Run `sudo btlejuice` command in another terminal to start
+    intercepting BLE traffic between two devices
+  - Use `-u` option to specify a URL for web interface
+  - Use `-w` option to specify a whitelist of MAC addresses to target
+  - Use `-b` option to specify a blacklist of MAC addresses to ignore
+  - Use web interface to select a target device from scanned list
+  - Use web interface to clone target device's services and characteristics
+  - Use web interface to modify target device's characteristics values
+- To perform various network attacks on classic and BLE devices using Bettercap:
+  - Install Bettercap on the local computer
+  - Connect a compatible Bluetooth dongle to the computer
+  - Run `sudo bettercap` command in a terminal to start Bettercap interactive session
+  - Use `bluetooth.show` command to show available Bluetooth interfaces
+  - Use `set bluetooth.interface <name>` command to select an interface
+  - Use `bluetooth.recon on` command to start scanning for nearby classic 
+    and BLE devices
+  - Use `bluetooth.show` command again to show detected devices with their names,
+    MAC addresses,
+    vendors,
+    RSSI values,
+    etc.
+  - Use `set bluetooth.target <mac>` command to select a target device by its MAC address
+  - Use `bluetooth.info` command to get more information about target device such as version,
+    name,
+    features,
+    etc.
+  - Use `bluetooth.exploit <module>` command to run an exploit module against target device such as bluetooth_pairing_pin.rb,
+    bluetooth_dos.rb,
+    etc.
+- To perform various exploits on classic and BLE devices using Metasploit Framework:
+  - Install Metasploit Framework on the local computer
+  - Connect a compatible Bluetooth dongle to the computer
+  - Run `msfconsole` command in a terminal to start Metasploit interactive session
+  - Use `search bluetooth` command to show available exploit modules related 
+    to Bluetooth 
+  - Use `use <module>` command to select an exploit module such as auxiliary/scanner/bluetooth/version.rb,
+    auxiliary/dos/bluetooth/bluetooth_dos.rb,
+    etc.
+  - Use `show options` command to show required options for selected module such as RHOSTS,
+    INTERFACE,
+    PIN_LENGTH,
+    etc.
+  - Use `set <option> <value>` command to set an option value such as RHOSTS <mac>,
+    INTERFACE hci0,
+    PIN_LENGTH 4,
+    etc.
+  - Use `run` command to execute selected module against target device
 
-  - Connect the Ubertooth device to the computer via USB
-  - Run `ubertooth-btle -f` to start capturing BLE packets
-  - Run `wireshark -k -i /tmp/pipe` to start Wireshark with a named pipe as input
-  - Pair the Android device with the target device using Bluetooth settings
-  - Observe the BLE packets in Wireshark
-
-- To discover and enumerate Bluetooth devices and services using hcitool and sdptool:
-
-  - Connect the Bluetooth adapter to the computer via USB
-  - Run `hciconfig hci0 up` to bring up the adapter interface
-  - Run `hcitool scan` to scan for nearby devices
-  - Note down the MAC address of the target device
-  - Run `sdptool browse <target MAC>` to browse the services offered by the target device
-  - Observe the service records in the output
-
-- To fuzz and test the GATT profile of a BLE device using Btlejuice:
-
-  - Connect two Bluetooth adapters to the computer via USB
-  - Run `btlejuice-proxy` on one adapter to start the proxy server
-  - Run `btlejuice` on another adapter to start the web interface
-  - Open a web browser and navigate to `http://localhost:8000`
-  - Scan for nearby BLE devices using the web interface
-  - Select the target device and click on "Intercept"
-  - Observe the GATT characteristics of the target device in the web interface
-  - Modify or inject values into the GATT characteristics using the web interface
-
-- To perform a DoS attack on a classic Bluetooth device using L2ping:
-
-  - Connect the Bluetooth adapter to the computer via USB
-  - Run `hciconfig hci0 up` to bring up the adapter interface
-  - Run `l2ping <target MAC> -s <size> -f` to send large L2CAP packets to the target device in a loop
-  - Observe the target device becoming unresponsive or crashing
-
-#### 2.1.3 How to use MSF to penetrate bluetooth on Android 10 device?
+#### 2.1.1.2 How to use MSF to penetrate bluetooth on Android 10 device?
 
 MSF (Metasploit Framework) is a popular tool for penetration testing that provides various modules for exploiting different vulnerabilities in various systems. To use MSF to penetrate bluetooth on Android 10 device:
 
