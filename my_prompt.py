@@ -11,7 +11,7 @@ def convert_to_markdown(titles_string):
         else:
             serial_number, text = title.split(' ', 1)
             num_of_hashes = serial_number.count('.')
-            markdown_title = '#' * (num_of_hashes + 2) + ' ' + serial_number + ' ' + text
+            markdown_title = '#' * (num_of_hashes + 1) + ' ' + serial_number + ' ' + text
         markdown_titles.append(markdown_title)
     return '\n'.join(markdown_titles)
 
