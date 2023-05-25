@@ -27,7 +27,7 @@ double backticks> and <make no output>:
 2. Answer the questions in the text <delimited by \
 triple backticks>.Put the answer below each question.
 3. Output <[original serial numbered questions] and \
-[generated answers]> in <hierarchical raw grammarly \
+[generated answers]> in <hierarchical raw grammar \
 {format} format>.
 ```{markdown_text}```
 """

