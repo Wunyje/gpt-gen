@@ -1,6 +1,3 @@
-#! https://zhuanlan.zhihu.com/p/630570012
-# GPT-Introduction about `Reversing SD690 Image Files`
-
 In this blog post, we will explore the process of reversing the image files of SD690, a Qualcomm Snapdragon processor that is used in some Android devices. We will also discuss the interaction between SD690 and RH850, a Renesas microcontroller that is used in some automotive applications. Our goal is to understand how these two chips communicate with each other and what information they exchange.
 
 ## 1. What is SD690 and RH850?

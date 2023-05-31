@@ -1,27 +1,3 @@
-#! https://zhuanlan.zhihu.com/p/630765841
-# GPT-Introduction on Nand flash instruction scan
-```
-CONTENT:
-Introduction on Nand flash instruction scan
-1 What's the structure of Nand flash?
-1.1 Does it have a controller to send out instructions?
-1.1.1 How does the controller interface with the host?
-1.1.1.1 What's the difference and relation between host's instruction and controller's instruction?
-1.1.2 What's the difference between Nand flash instrution and ISA, like x86, RISCV, ARM?
-1.1.3 Is nand flash's instruction more confidencial than common ISA?
-1.2 Can a Nand flash be programed to run specific program?
-1.2.1 If so, how to make the  specific program run in the Nand flash?
-2 What is instruction scan?
-2.1 What's the main purpose of instruction scan?
-2.1.1 Does the purpose of instruction scan varies, depending on the target is nand flash or ISA?
-2.1.2 If so, what is the purpose correspondingly?
-2.2 How do exsiting works implement instruction scan on nand flash?
-2.2.1 What is the difference between nand flash and ISA instruction scan?
-2.2.2 If the main purpose is to reverse nand flash instruction, how to do that?
-2.2.3 If the main purpose is to determine nand flash instruction, it's the same as 2.1?
-2.2.4 If a scan program was used to scan nand flash instruction, would it  be processed within or without Nand flash?
-```
-
 Nand flash is a type of non-volatile memory that stores data by changing the state of electrically erasable programmable read-only memory (EEPROM) cells. Nand flash has a simple structure consisting of an array of memory cells, each composed of one or more floating-gate transistors, and a controller that manages the read, write, and erase operations on the cells.
 
 ## 1 What's the structure of Nand flash?

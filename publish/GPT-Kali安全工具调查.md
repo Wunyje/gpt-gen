@@ -1,4 +1,3 @@
-#! https://zhuanlan.zhihu.com/p/630477317
 ## 1 Kali部分安全工具的功能
 Here are the main functions and typical uses of the tools you mentioned:
 

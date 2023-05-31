@@ -1,20 +1,3 @@
-#! https://zhuanlan.zhihu.com/p/630720610
-# GPT-Introduction of Wi-Fi penetration test on Android 10 device
-```
-CONTENT:
-Introduction of Wi-Fi penetration test on Android 10 device
-1 What is Wi-Fi?
-1.1  How does Wi-Fi work on Android 10 device?
-1.2 How does that work differently from Linux OS?
-2 What is Wi-Fi penetration test?
-2.1 How could it be implemented on Android 10 device?
-2.1.1 What tools are needed?
-2.1.2 How to use these tools individually or together? (Use examples to illustrate)
-2.1.3 How to use MSF to penetrate Wi-Fi on Android 10 device?
-2.2.How to utilize existing CVE vulnerabilities of Wi-Fi on Android 10?
-2.2.1 What are the CVE  vulnerabilities about Wi-Fi on Android 10 after 2020?
-2.2.2 Does any of these vulnerabilities have POC, or have been exploited?
-```
 ## 1. What is Wi-Fi?
 ### 1.1  How does Wi-Fi work on Android 10 device?
 Wi-Fi works on Android 10 device by using a hardware component called a Wi-Fi chip, which is integrated into the device's motherboard or attached as a separate module. The Wi-Fi chip contains a radio transceiver that can send and receive radio signals in the 2.4 GHz or 5 GHz frequency bands. The Wi-Fi chip also contains a processor that can perform various functions such as encryption, authentication, and power management.

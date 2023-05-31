@@ -1,6 +1,3 @@
-#! https://zhuanlan.zhihu.com/p/630477705
-# GPT-Introduction about BlueZ and it's relationship with Android
-
 In this blog post, I will introduce you to BlueZ, a Bluetooth stack for Linux-based systems. I will also show you how to detect whether an Android device is using BlueZ or not, and how to do the same on Kali Linux OS.
 
 ## 1. What is BlueZ?

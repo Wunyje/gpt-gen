@@ -1,19 +1,3 @@
-#! https://zhuanlan.zhihu.com/p/632041983
-# GPT-Introduction of Cellular penetration test on Android 10 device
-```
-Introduction of Cellular penetration test on Android 10 device
-1 What is Cellular?
-1.1 What the structure of Cellular, illustrate both in software and hardware on SD690?
-1.2 How does Cellular work on Android 10 device on SD690?
-2 What is Cellular penetration test?
-2.1 How could it be implemented on Android 10 device?
-2.1.1 What tools are needed?
-2.1.2 How to use these tools individually or together? (Use examples to illustrate)
-2.1.3 How to use MSF to penetrate Cellular on Android 10 device?
-2.2.How to utilize existing CVE vulnerabilities of Cellular on Android 10?
-2.2.1 What are the CVE  vulnerabilities about Cellular on Android 10 after 2020?
-2.2.2 Does any of these vulnerabilities have POC, or have been exploited?
-```
 # 1 What is Cellular?
 ## 1.1 What the structure of Cellular, illustrate both in software and hardware on SD690?
 Cellular is a term that refers to the wireless communication network that uses radio waves to transmit voice and data signals over a large area. Cellular networks are composed of cells, which are geographic areas covered by a base station that connects to mobile devices. Each cell has a unique identifier and can handle a limited number of simultaneous connections.

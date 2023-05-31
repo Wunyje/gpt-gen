@@ -1,4 +1,3 @@
-#! https://zhuanlan.zhihu.com/p/630718821
 # GPT-Introduction of bluetooth penetration test on Android 10 device
 ```
 CONTENT:
