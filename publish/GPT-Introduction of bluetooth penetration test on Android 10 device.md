@@ -1,22 +1,3 @@
-# GPT-Introduction of bluetooth penetration test on Android 10 device
-```
-CONTENT:
-Introduction of Bluetooth penetration test on Android 10 device
-1 What is Bluetooth?
-1.1 What the structure of Bluetooth, illustrate both in software and hardware?
-1.1.1 What's `Bluedroid`?
-1.2 How does Bluetooth work on Android 10 device?
-1.2.1 How does that work differently from Linux OS?
-2 What is Bluetooth penetration test?
-2.1 How could it be implemented on Android 10 device?
-2.1.1 What tools are needed?
-2.1.1.1 How to use these tools individually or together? (Use examples to illustrate)
-2.1.1.2 How to use MSF to penetrate Bluetooth on Android 10 device?
-2.1.2 Targeting at `Bluedroid`, what things could be done to penetrate that?  
-2.2 How to utilize existing CVE vulnerabilities of Bluetooth on Android 10?
-2.2.1 What are the CVE  vulnerabilities about Bluetooth on Android 10 after 2020?
-2.2.2 Does any of these vulnerabilities have POC, or have been exploited?
-```
 In this blog post, I will introduce the basics of bluetooth penetration testing on an Android 10 device. Bluetooth is a wireless technology that allows devices to communicate over short distances. It is widely used for various purposes, such as connecting headphones, keyboards, speakers, smartwatches, and more. Bluetooth penetration testing is a method of finding and exploiting security vulnerabilities in bluetooth-enabled devices and applications. It can help identify risks and improve the security posture of mobile devices.
 
 ## 1. What is bluetooth?
