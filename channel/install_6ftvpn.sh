@@ -1,0 +1,1 @@
+curl -sL https://dl.6ftproxy.com/cli/v1.1.0/install.sh | sudo bash -
