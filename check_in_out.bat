@@ -21,7 +21,7 @@ adb shell input tap 550 2200
 rem 进入钉钉后，点击:【开源网安】
 ping /n 20 /w 1000 localhost > nul
 
-adb shell input tap 330 1000
+adb shell input tap 125 1415
 rem 点击【考勤打卡】
 ping /n 21 /w 1000 localhost > nul
 
