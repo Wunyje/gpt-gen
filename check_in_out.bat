@@ -19,11 +19,11 @@ rem 等待2秒%
 
 adb shell input tap 550 2200
 rem 进入钉钉后，点击:【开源网安】
-ping /n 6 /w 1000 localhost > nul
+ping /n 20 /w 1000 localhost > nul
 
 adb shell input tap 330 1000
 rem 点击【考勤打卡】
-ping /n 10 /w 1000 localhost > nul
+ping /n 21 /w 1000 localhost > nul
 
 adb shell input tap 530 1360
 rem 点击【上班打卡，下班打卡】
