@@ -1,5 +1,5 @@
 rem Delay for up to 60 minutes (3600 seconds)
-set /a DELAY=%RANDOM% %% 61
+set /a DELAY=%RANDOM% %% 11
 ping /n %DELAY% /w 1000 localhost > nul
 echo %time%
 
@@ -23,7 +23,7 @@ ping 127.0.0.1 -n 6
 
 adb shell input tap 330 1000
 rem 点击【考勤打卡】
-ping 127.0.0.1 -n 6
+ping 127.0.0.1 -n 10
 
 adb shell input tap 530 1360
 rem 点击【上班打卡，下班打卡】
