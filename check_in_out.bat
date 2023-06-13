@@ -1,5 +1,6 @@
+cd %~dp0
 rem Delay for up to 60 minutes (3600 seconds)
-set /a DELAY=%RANDOM% %% 11
+set /a DELAY=%RANDOM% %% 3601
 ping /n %DELAY% /w 1000 localhost > nul
 echo %time%
 
