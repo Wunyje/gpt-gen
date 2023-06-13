@@ -22,7 +22,7 @@ ping /n 21 /w 1000 localhost > nul
 
 adb shell input tap 530 1360
 rem 点击【上班打卡，下班打卡】
-ping /n 2 /w 1000 localhost > nul
+ping /n 5 /w 1000 localhost > nul
 
 adb shell screencap -p /sdcard/check_res.png
 ping /n 2 /w 1000 localhost > nul
