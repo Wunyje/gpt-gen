@@ -14,35 +14,35 @@ rem 点亮屏幕
 
 adb shell am start -n com.alibaba.android.rimet/com.alibaba.android.rimet.biz.LaunchHomeActivity
 rem 找到钉钉应用，并打开。
-ping 127.0.0.1 -n 6
+ping /n 6 /w 1000 localhost > nul
 rem 等待2秒%
 
 adb shell input tap 550 2200
 rem 进入钉钉后，点击:【开源网安】
-ping 127.0.0.1 -n 6
+ping /n 6 /w 1000 localhost > nul
 
 adb shell input tap 330 1000
 rem 点击【考勤打卡】
-ping 127.0.0.1 -n 10
+ping /n 10 /w 1000 localhost > nul
 
 adb shell input tap 530 1360
 rem 点击【上班打卡，下班打卡】
-ping 127.0.0.1 -n 2
+ping /n 2 /w 1000 localhost > nul
 
 adb shell screencap -p /sdcard/check_res.png
-ping 127.0.0.1 -n 2
+ping /n 2 /w 1000 localhost > nul
 adb pull /sdcard/check_res.png
-ping 127.0.0.1 -n 2
+ping /n 2 /w 1000 localhost > nul
 rem 截图成功打卡图片到电脑
 
 
 adb shell am force-stop com.alibaba.android.rimet
 rem 关闭钉钉
-ping 127.0.0.1 -n 2
+ping /n 2 /w 1000 localhost > nul
 
 adb shell input keyevent 26
 rem 关闭手机屏幕。
-ping 127.0.0.1 -n 2
+ping /n 2 /w 1000 localhost > nul
 
 check_res.png
 
