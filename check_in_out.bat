@@ -1,3 +1,8 @@
+rem Delay for up to 60 minutes (3600 seconds)
+set /a DELAY=%RANDOM% %% 61
+ping /n %DELAY% /w 1000 localhost > nul
+echo %time%
+
 adb connect 192.168.8.191
 rem WiFi连接手机
 
