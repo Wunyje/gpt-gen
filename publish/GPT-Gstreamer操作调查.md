@@ -1,3 +1,4 @@
+gstreamer是一个开源的多媒体框架，可以用来实现音视频的编解码、处理、播放和转码等功能。本文将介绍如何用gstreamer完成多码率视频转换与生成、音视频编解码的基本步骤和原理。
 ## 多码率视频转换与生成
 多码率视频转换与生成是一种常见的视频处理需求，它可以根据不同的网络环境和设备性能，提供不同码率和分辨率的视频流，从而提高视频的传输效率和观看体验。本文将介绍如何使用Gstreamer来实现多码率视频转换与生成的功能。
 
@@ -16,14 +17,11 @@ Gstreamer是一款功能强大的多媒体框架，可以用于音视频的采�
 
 基于以上的element，我们可以构建出如下的pipeline来实现多码率视频转换与生成：
 ```
-gst-launch-1.0 filesrc location=input.mp4 ! decodebin ! tee name=t \
-t. ! queue ! videoscale ! capsfilter caps="video/x-raw,width=1920,height=1080" ! 
+gst-launch-1.0 filesrc location=input.mp4 ! decodebin ! tee name=t t. ! queue ! videoscale ! capsfilter caps="video/x-raw,width=1920,height=1080" ! 
 
-x264enc bitrate=5000 ! hlssink location=high_%05d.ts playlist-location=high.m3u8 \
-t. ! queue ! videoscale ! capsfilter caps="video/x-raw,width=1280,height=720" ! 
+x264enc bitrate=5000 ! hlssink location=high_%05d.ts playlist-location=high.m3u8 t. ! queue ! videoscale ! capsfilter caps="video/x-raw,width=1280,height=720" ! 
 
-x264enc bitrate=3000 ! hlssink location=medium_%05d.ts playlist-location=medium.m3u8 \
-t. ! queue ! videoscale ! capsfilter caps="video/x-raw,width=640,height=360" ! 
+x264enc bitrate=3000 ! hlssink location=medium_%05d.ts playlist-location=medium.m3u8 t. ! queue ! videoscale ! capsfilter caps="video/x-raw,width=640,height=360" ! 
 
 x264enc bitrate=1000 ! hlssink location=low_%05d.ts playlist-location=low.m3u8
 ```
@@ -35,7 +33,6 @@ x264enc bitrate=1000 ! hlssink location=low_%05d.ts playlist-location=low.m3u8
 
 ## 构建编码管道
 
-gstreamer是一个开源的多媒体框架，可以用来实现音视频的编解码、处理、播放和转码等功能。本文将介绍如何用gstreamer完成音视频编解码的基本步骤和原理。（编码和解码分两部分撰写）
 
 ### 音视频编码
 
@@ -54,9 +51,7 @@ gstreamer提供了多种音视频编码器，可以根据不同的需求和场�
 gstreamer使用管道（pipeline）的概念来组织多媒体处理的流程。一个管道由若干个元素（element）组成，每个元素执行一个特定的功能，例如读取文件、转换格式、编解码等。元素之间通过垫片（pad）连接，垫片负责传输数据和协调数据流。一个典型的音视频编码管道如下：
 
 ```
-gst-launch-1.0 filesrc location=input.avi ! decodebin ! videoconvert ! x264enc bitrate=1000 ! queue ! mux. \
-audiotestsrc ! faac bitrate=128 ! queue ! mux. \
-mpegtsmux name=mux ! filesink location=output.ts
+gst-launch-1.0 filesrc location=input.avi ! decodebin ! videoconvert ! x264enc bitrate=1000 ! queue ! mux. audiotestsrc ! faac bitrate=128 ! queue ! mux. mpegtsmux name=mux ! filesink location=output.ts
 ```
 
 这个管道从input.avi文件中读取音视频数据，使用decodebin插件自动解码成原始格式，然后使用videoconvert插件转换成x264enc插件需要的格式，再使用x264enc插件以1000kbps的比特率进行H.264编码，并将结果放入一个队列（queue）中。同时，使用audiotestsrc插件生成一段测试音频信号，并使用faac插件以128kbps的比特率进行AAC编码，并将结果放入另一个队列中。最后，使用mpegtsmux插件将两个队列中的数据混合成MPEG-TS格式，并输出到output.ts文件中。
@@ -78,8 +73,7 @@ gstreamer提供了多种音视频解码器，可以根据不同的格式和协�
 gstreamer使用管道（pipeline）的概念来组织多媒体处理的流程。一个管道由若干个元素（element）组成，每个元素执行一个特定的功能，例如读取文件、转换格式、编解码等。元素之间通过垫片（pad）连接，垫片负责传输数据和协调数据流。一个典型的音视频解码管道如下：
 
 ```
-gst-launch-1.0 filesrc location=input.ts ! tsdemux ! h264parse ! avdec_h264 ! videoconvert ! autovideosink \
-tsdemux ! aacparse ! faad ! audioconvert ! autoaudiosink
+gst-launch-1.0 filesrc location=input.ts ! tsdemux ! h264parse ! avdec_h264 ! videoconvert ! autovideosink tsdemux ! aacparse ! faad ! audioconvert ! autoaudiosink
 ```
 
 这个管道从input.ts文件中读取MPEG-TS格式的音视频数据，使用tsdemux插件将其分离成H.264和AAC两个流，并分别使用h264parse和aacparse插件进行格式分析，然后使用avdec_h264和faad插件进行H.264和AAC的解码，并将结果转换成适合显示和播放的格式，最后使用autovideosink和autoaudiosink插件自动选择合适的视频和音频输出设备进行播放。
@@ -87,4 +81,3 @@ tsdemux ! aacparse ! faad ! audioconvert ! autoaudiosink
 ### 启动解码
 
 构建好管道后，就可以启动解码了。gstreamer提供了一些命令行工具和API来控制管道的状态和行为。例如，gst-launch-1.0工具可以直接运行上面的管道命令；gst-play-1.0工具可以播放多媒体文件；gst-edit-1.0工具可以编辑多媒体文件；gst-inspect-1.0工具可以查看插件和元素的信息等。另外，也可以使用C、Python、Java等语言来调用gstreamer库中的函数来创建和控制管道，例如gst_element_factory_make、gst_element_set_state、gst_element_get_bus等。
-
