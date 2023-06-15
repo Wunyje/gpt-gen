@@ -41,10 +41,9 @@ ping /n 2 /w 1000 localhost > nul
 check_test.png
 
 git add --all
-git commit -m "update"
+git commit -m "check test done"
 git push
 
-schtasks /delete /tn check_test  < Y.txt
 
 exit
 

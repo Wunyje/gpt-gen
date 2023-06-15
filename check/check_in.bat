@@ -41,10 +41,8 @@ ping /n 2 /w 1000 localhost > nul
 check_in_res.png
 
 git add --all
-git commit -m "update"
+git commit -m "check in done"
 git push
-
-schtasks /delete /tn check_in_task < Y.txt
 
 exit
 
