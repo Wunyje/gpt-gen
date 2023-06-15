@@ -1,44 +1,44 @@
 cd /d %~dp0
 
 adb connect 192.168.8.191
-rem WiFi�����ֻ�
+rem WiFi连接手机
 
 adb devices
-rem �鿴adb�����ֻ��豸
+rem 查看adb连接手机设备
 
 adb shell input keyevent 224
-rem ������Ļ
+rem 点亮屏幕
 
 adb shell am start -n com.alibaba.android.rimet/com.alibaba.android.rimet.biz.LaunchHomeActivity
-rem �ҵ�����Ӧ�ã����򿪡�
+rem 打开钉钉
 ping /n 6 /w 1000 localhost > nul
-rem �ȴ�6��%
+rem 等待6秒
 
 adb shell input tap 550 2200
-rem ���붤���󣬵��:����Դ������
+rem 进钉钉后，点开源网安
 ping /n 20 /w 1000 localhost > nul
 
 adb shell input tap 125 1415
-rem ��������ڴ򿨡�
+rem 点击【考勤打卡】
 ping /n 21 /w 1000 localhost > nul
 
 adb shell input tap 530 1360
-rem ������ϰ�򿨣��°�򿨡�
+rem 点击上下班打卡
 ping /n 5 /w 1000 localhost > nul
 
 adb shell screencap -p /sdcard/check_out_res.png
 ping /n 2 /w 1000 localhost > nul
 adb pull /sdcard/check_out_res.png
 ping /n 2 /w 1000 localhost > nul
-rem ��ͼ�ɹ���ͼƬ������
+rem 截图成功打卡到电脑
 
 
 adb shell am force-stop com.alibaba.android.rimet
-rem �رն���
+rem 关闭钉钉
 ping /n 2 /w 1000 localhost > nul
 
 adb shell input keyevent 26
-rem �ر��ֻ���Ļ��
+rem 关闭手机屏幕。
 ping /n 2 /w 1000 localhost > nul
 
 check_out_res.png
