@@ -1,50 +1,50 @@
 cd /d %~dp0
 
 adb connect 192.168.8.191
-rem WiFiÁ¬½ÓÊÖ»ú
+rem WiFiè¿žæŽ¥æ‰‹æœº
 
 adb devices
-rem ²é¿´adbÁ¬½ÓÊÖ»úÉè±¸
+rem æŸ¥çœ‹adbè¿žæŽ¥æ‰‹æœºè®¾å¤‡
 
 adb shell input keyevent 224
-rem µãÁÁÆÁÄ»
+rem ç‚¹äº®å±å¹•
 
 adb shell am start -n com.alibaba.android.rimet/com.alibaba.android.rimet.biz.LaunchHomeActivity
-rem ÕÒµ½¶¤¶¤Ó¦ÓÃ£¬²¢´ò¿ª¡£
+rem æ‰¾åˆ°é’‰é’‰åº”ç”¨ï¼Œå¹¶æ‰“å¼€ã€‚
 ping /n 6 /w 1000 localhost > nul
-rem µÈ´ý2Ãë%
+rem ç­‰å¾…6ç§’%
 
 adb shell input tap 550 2200
-rem ½øÈë¶¤¶¤ºó£¬µã»÷:¡¾¿ªÔ´Íø°²¡¿
+rem è¿›å…¥é’‰é’‰åŽï¼Œç‚¹å‡»:ã€å¼€æºç½‘å®‰ã€‘
 ping /n 20 /w 1000 localhost > nul
 
 adb shell input tap 125 1415
-rem µã»÷¡¾¿¼ÇÚ´ò¿¨¡¿
+rem ç‚¹å‡»ã€è€ƒå‹¤æ‰“å¡ã€‘
 ping /n 21 /w 1000 localhost > nul
 
-adb shell input tap 530 1360
-rem µã»÷¡¾ÉÏ°à´ò¿¨£¬ÏÂ°à´ò¿¨¡¿
-ping /n 5 /w 1000 localhost > nul
 
-adb shell screencap -p /sdcard/check_res.png
+adb shell screencap -p /sdcard/check_in_res.png
 ping /n 2 /w 1000 localhost > nul
-adb pull /sdcard/check_res.png
+adb pull /sdcard/check_in_res.png
 ping /n 2 /w 1000 localhost > nul
-rem ½ØÍ¼³É¹¦´ò¿¨Í¼Æ¬µ½µçÄÔ
+rem æˆªå›¾æˆåŠŸæ‰“å¡å›¾ç‰‡åˆ°ç”µè„‘
 
 
 adb shell am force-stop com.alibaba.android.rimet
-rem ¹Ø±Õ¶¤¶¤
+rem å…³é—­é’‰é’‰
 ping /n 2 /w 1000 localhost > nul
 
 adb shell input keyevent 26
-rem ¹Ø±ÕÊÖ»úÆÁÄ»¡£
+rem å…³é—­æ‰‹æœºå±å¹•ã€‚
 ping /n 2 /w 1000 localhost > nul
 
-check_res.png
+check_in_res.png
 
 git add --all
 git commit -m "update"
 git push
 
+schtasks /delete /tn check_in_task < Y.txt
+
 exit
+
