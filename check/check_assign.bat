@@ -16,7 +16,9 @@ set /a rand_sec=%RANDOM% %% 50 + 10
 schtasks /create /tn check_out_task /st 21:%rand_minute%:%rand_sec% /sc once /tr %~dp0check_out.bat  < Y.txt
 
 adb connect 192.168.8.191
+adb devices
 adb shell input keyevent 224
+ping /n 6 /w 1000 localhost > nul
 adb shell screencap -p /sdcard/check_assign.png
 adb pull /sdcard/check_assign.png
 adb shell input keyevent 26
