@@ -1,5 +1,4 @@
-cd D:
-cd %~dp0
+cd /d %~dp0
 
 adb connect 192.168.8.191
 rem WiFi连接手机
