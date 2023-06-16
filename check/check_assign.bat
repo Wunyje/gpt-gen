@@ -5,7 +5,8 @@ cd /d %~dp0
 
 set /a rand_minute=%RANDOM% %% 50 + 10 
 set /a rand_sec=%RANDOM% %% 50 + 10 
-schtasks /create /tn check_test /st 11:%rand_minute%:%rand_sec% /sc once /tr %~dp0check_test.bat  < Y.txt
+schtasks /create /tn check_test /st 10:00:00 /sc once /tr %~dp0check_test.bat  < Y.txt
+:: 11:%rand_minute%:%rand_sec%
 
 set /a rand_minute=%RANDOM% %% 50 + 10 
 set /a rand_sec=%RANDOM% %% 50 + 10 
