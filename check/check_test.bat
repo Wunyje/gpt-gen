@@ -38,7 +38,6 @@ adb shell input keyevent 26
 rem 关闭手机屏幕。
 ping /n 2 /w 1000 localhost > nul
 
-check_test.png
 
 git add --all
 git commit -m "check test done"
