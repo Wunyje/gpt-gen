@@ -24,6 +24,7 @@ adb shell screencap -p /sdcard/check_assign.png
 adb pull /sdcard/check_assign.png
 adb shell input keyevent 26
 
+git pull
 git add --all
 git commit -m "check assign done"
 git push
