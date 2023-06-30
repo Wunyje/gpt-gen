@@ -1,71 +1,21 @@
-# 4 用`Gstreamer`实现网络带宽探测与码率选择(QoS)
-### 4.1 网络带宽的探测
-网络带宽是指网络中传输数据的能力，通常用比特/秒(bps)来衡量。网络带宽的大小影响了视频流的质量和稳定性，因此在使用`Gstreamer`进行视频传输时，需要对网络带宽进行探测，以便根据网络状况调整视频流的码率。
+!autovideosink qos = true is a useful command for Gstreamer users who want to improve the quality of service (QoS) of their video streams. In this blog post, I will explain what this command does, why it is important, and how to use it in your Gstreamer pipelines.
 
-网络带宽的探测方法有很多，例如：
+Gstreamer is a powerful framework for creating multimedia applications. It allows you to build complex pipelines of elements that can process, transform, and stream audio and video data. However, working with multimedia data can be challenging, especially when dealing with network delays, packet loss, or bandwidth limitations. These factors can affect the quality of your video streams, causing glitches, stuttering, or lagging.
 
-- 主动探测：发送端通过发送特定的探测包，然后根据接收端的反馈或者自身的观察，来估计网络带宽。主动探测的优点是可以实时地反映网络状况，缺点是会增加网络负载和延迟。
-- 被动探测：接收端通过分析接收到的视频流的特征，如丢包率、抖动、延迟等，来推断网络带宽。被动探测的优点是不会增加网络负载和延迟，缺点是不能及时地反映网络状况。
-- 混合探测：结合主动探测和被动探测的优缺点，采用一种折中的方式，如周期性地发送探测包或者根据视频流的变化动态调整探测频率等。
+This is where QoS comes in. QoS is a term that refers to the ability of a system to deliver data with a certain level of performance and reliability. QoS can be measured by various metrics, such as latency, jitter, throughput, or packet loss rate. By enabling QoS in your Gstreamer pipelines, you can monitor these metrics and adjust your pipeline accordingly to optimize the video quality.
 
-`Gstreamer`提供了一些插件和工具来实现网络带宽的探测，例如：
+One way to enable QoS in your Gstreamer pipelines is to use the !autovideosink element with the qos property set to true. !autovideosink is a sink element that automatically selects and configures the best video output device for your system. It can handle various formats and resolutions of video data and display them on your screen. By setting the qos property to true, you tell !autovideosink to enable QoS support and report QoS events to the upstream elements.
 
-- `gst-shark`：一个用于分析`Gstreamer`管道性能的工具，可以显示各个元素的处理时间、吞吐量、CPU占用等信息。
-- `gst-interpipe`：一个用于在不同的`Gstreamer`管道之间传输数据的插件，可以实现跨进程或跨线程的数据交换。
-- `gst-bad-plugins`：一个包含了一些实验性或不稳定的插件的模块，其中有一些插件可以用于网络带宽的探测，如`rtpjitterbuffer`、`rtpbin`、`rtpsession`等。
+QoS events are messages that inform the upstream elements about the current QoS status of the pipeline. For example, a QoS event can indicate that the pipeline is experiencing high latency or low throughput. The upstream elements can then react to these events and adjust their behavior accordingly. For example, they can reduce the bitrate, framerate, or resolution of the video stream to cope with the network conditions.
 
-### 4.1.1 `Gstreamer`实现网络带宽的探测
-网络带宽是指网络传输数据的能力，通常用比特/秒(bps)来衡量。网络带宽的探测是指通过发送和接收数据包，计算出当前网络的可用带宽。这对于视频流媒体应用来说，非常重要，因为视频流媒体需要根据网络状况，动态调整视频的码率，以保证视频的质量和流畅性。
+To use !autovideosink qos = true in your Gstreamer pipelines, you simply need to add it as the last element of your pipeline. For example, if you want to stream a video file over UDP using RTP, you can use the following pipeline:
 
-`Gstreamer`是一个开源的多媒体框架，可以用来构建各种音视频处理应用。`Gstreamer`提供了一些插件和工具，可以用来实现网络带宽的探测。例如：
+gst-launch-1.0 filesrc location=video.mp4 ! qtdemux ! h264parse ! rtph264pay ! udpsink host=127.0.0.1 port=5000
 
-- `udpsrc`插件可以用来接收UDP数据包，并输出到下游元素。它有一个属性`bitrate`，可以显示当前接收到的数据包的比特率。
-- `udpsink`插件可以用来发送UDP数据包，并从上游元素接收数据。它有一个属性`bitrate`，可以显示当前发送出去的数据包的比特率。
-- `gst-launch-1.0`工具可以用来快速构建和运行一个`Gstreamer`管道。它有一个参数`--stats`，可以显示管道中每个元素的统计信息，包括比特率。
+On the receiver side, you can use the following pipeline:
 
-使用这些插件和工具，我们可以构建一个简单的网络带宽探测的示例。假设我们有两台主机A和B，分别运行以下命令：
+gst-launch-1.0 udpsrc port=5000 ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! autovideosink qos=true
 
-- 在主机A上运行：`gst-launch-1.0 --stats videotestsrc ! x264enc ! rtph264pay ! udpsink host=B port=5000`
-- 在主机B上运行：`gst-launch-1.0 --stats udpsrc port=5000 ! rtph264depay ! avdec_h264 ! fakesink`
+This way, you can stream and display your video file with QoS support enabled.
 
-这样，主机A会生成一个视频测试信号，并编码为H.264格式，然后通过UDP协议发送到主机B的5000端口。主机B会接收这个视频流，并解码为原始格式，然后丢弃掉。在运行过程中，我们可以通过查看两台主机上的`gst-launch-1.0`的输出，得到当前网络带宽的探测结果。例如：
-
-- 在主机A上看到：`/GstPipeline:pipeline0/GstUDPSink:udpsink0: bitrate = 1000000 bps`
-- 在主机B上看到：`/GstPipeline:pipeline0/GstUDPSrc:udpsrc0: bitrate = 1000000 bps`
-
-这表示当前网络的可用带宽大约是1 Mbps。
-
-
-### 4.2 码率选择(QoS)
-码率选择(QoS)是指根据网络带宽的变化，动态地调整视频流的码率，以保证视频流的质量和稳定性。码率选择(QoS)可以在发送端或者接收端进行，也可以在两端同时进行。
-
-发送端的码率选择(QoS)是指发送端根据自身或者接收端反馈的网络状况，调整视频编码器的参数，如分辨率、帧率、码率等，以适应网络带宽。发送端的码率选择(QoS)可以实现视频流的压缩和降质，从而减少网络负载和延迟。
-
-接收端的码率选择(QoS)是指接收端根据自身或者发送端反馈的网络状况，调整视频解码器或者渲染器的参数，如分辨率、帧率、码率等，以适应网络带宽。接收端的码率选择(QoS)可以实现视频流的放大和提质，从而提高用户体验和满意度。
-
-`Gstreamer`提供了一些插件和工具来实现码率选择(QoS)，例如：
-
-- `gst-qos`：一个用于实现QoS的插件，可以根据网络状况和用户设置，动态地调整视频流的码率、分辨率、帧率等参数。
-- `gst-switch`：一个用于实现视频流的切换的工具，可以根据网络状况和用户选择，动态地切换不同的视频源或者视频质量。
-- `gst-adaptive-streaming`：一个用于实现自适应流媒体(Adaptive Streaming)的模块，可以根据网络状况和用户需求，动态地选择不同的视频段或者视频质量。
-
-### 4.2.1 `Gstreamer`实现码率选择(QoS)
-码率选择是指根据网络带宽的变化，动态调整视频流的码率，以适应不同的网络状况。这可以提高视频流媒体应用的用户体验，避免出现卡顿、模糊等问题。
-
-`Gstreamer`提供了一些机制和元素，可以用来实现码率选择(QoS)。例如：
-
-- `Gstreamer`管道中每个元素都有一个属性`qos`,可以设置为true或false。当设置为true时，表示该元素支持QoS功能，并会根据下游元素的反馈信息，调整自己的处理速度和输出质量。
-- `Gstreamer`管道中每个元素都会发送和接收一些QoS事件和消息。这些事件和消息包含了一些关于流处理的统计信息，例如延迟、丢包率、抖动等。这些信息可以用来评估当前网络状况，以及视频流的质量。
-- `Gstreamer`提供了一些专门用于QoS的元素，例如`queue2`、`rtpjitterbuffer`、`rtpbin`等。这些元素可以用来缓存、重排、丢弃数据包，以减少网络抖动和延迟的影响，以及实现多路复用和解复用等功能。
-
-使用这些机制和元素，我们可以构建一个简单的码率选择(QoS)的示例。假设我们有两台主机A和B，分别运行以下命令：
-
-- 在主机A上运行：`gst-launch-1.0 --stats videotestsrc ! x264enc tune=zerolatency bitrate=1000 ! rtph264pay ! udpsink host=B port=5000 qos=true`
-- 在主机B上运行：`gst-launch-1.0 --stats udpsrc port=5000 qos=true ! rtpjitterbuffer ! rtph264depay ! avdec_h264 ! autovideosink`
-
-这样，主机A会生成一个视频测试信号，并编码为H.264格式，然后通过UDP协议发送到主机B的5000端口。主机B会接收这个视频流，并解码为原始格式，然后显示出来。在运行过程中，我们可以通过查看两台主机上的`gst-launch-1.0`的输出，得到当前视频流的码率选择结果。例如：
-
-- 在主机A上看到：`/GstPipeline:pipeline0/GstX264Enc:x264enc0: bitrate = 800000 bps`
-- 在主机B上看到：`/GstPipeline:pipeline0/GstRTPJitterBuffer:rtpjitterbuffer0: drop-rate = 10 %`
-
-这表示当前网络的可用带宽不足1 Mbps，导致主机A降低了视频流的码率为800 Kbps，而主机B丢弃了10%的数据包，以减少延迟和抖动。
+I hope this blog post has helped you understand what !autovideosink qos = true does and how to use it in your Gstreamer pipelines. If you have any questions or feedback, please leave a comment below. Thank you for reading!
