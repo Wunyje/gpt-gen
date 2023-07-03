@@ -39,8 +39,9 @@ adb shell input keyevent 26
 rem 关闭手机屏幕。
 ping /n 2 /w 1000 localhost > nul
 
+SET my_date=%date%
 git add --all
-git commit -m "check test done"
+git commit -m "check test done in %my_date%"
 git push
 
 

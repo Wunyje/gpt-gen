@@ -45,7 +45,7 @@ ping /n 2 /w 1000 localhost > nul
 
 SET my_date=%date%
 git add --all
-git commit -m "check out done in%my_date%"
+git commit -m "check out done in %my_date%"
 git push
 
 exit
