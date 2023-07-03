@@ -10,4 +10,11 @@ If I want to use Gstreamer C API to construct a programe, which is required as "
 1) 客户端，服务器端为命令行形式控制；
 2) 视频分辨率为4K向下兼容，编码方式为H 264/H 265；"
 3) 点播服务软件支持多点访问，支持不少于32个用户同时在线异步回放。
-Considering both the server and client, correspondingly give me the programs outline of two sides
+How would you do that? Tell your thought step by step.
+
+
+I noticed that the program outlines are seperated and isolated, can you make it more intergral, after all, the eventual program is an intergral application.
+
+
+
+Is there any existing developed softwares, whose function is relatively close to this requirement ?
