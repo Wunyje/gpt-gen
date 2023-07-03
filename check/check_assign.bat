@@ -19,5 +19,5 @@ schtasks /create /tn check_out_task /st 21:%check_out_rand_minute%:%check_out_ra
 
 
 git add --all
-git commit -m "07:"%check_in_rand_minute%:%check_in_rand_sec%" 21":%check_out_rand_minute%:%check_out_rand_sec%
+git commit -m 07:%check_in_rand_minute%:%check_in_rand_sec%"  "21:%check_out_rand_minute%:%check_out_rand_sec%
 git push
