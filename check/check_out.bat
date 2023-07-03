@@ -1,5 +1,7 @@
 cd /d %~dp0
 
+git pull
+
 adb connect 192.168.8.191
 rem WiFi连接手机
 
@@ -41,7 +43,6 @@ adb shell input keyevent 26
 rem 关闭手机屏幕。
 ping /n 2 /w 1000 localhost > nul
 
-git pull
 git add --all
 git commit -m "check out done"
 git push
