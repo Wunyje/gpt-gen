@@ -17,3 +17,9 @@ How would you do that? Tell your thought step by step.
 
 
 I noticed that the program outlines are seperated and isolated, can you make it more intergral, after all, the eventual program is an intergral application.
+
+Is there any necessity to differentiate the server and the clients program? If so, please list out the outline of corresponding sides.
+
+Take server side as example, make a more intergral outline and give me the possible file structure.
+
+Try to write the pseudo code of all the '.c' files of server side, revealing the dynamic invoking relationship between these files
