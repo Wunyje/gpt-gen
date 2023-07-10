@@ -1,6 +1,6 @@
 Assuming that you are a master in coding C and using Gstreamer. Convert this to Gstreamer C API :```gst-launch-1.0 v4l2src device=/dev/video41 ! image/jpeg,width=640,height=480,framerate=30/1 ! jpegdec ! autovideosink```
 	
-There is a re
+There is a requirement
 "
 *main function*
 1 用Gstreamer实现编码板与解码板之间的音视频数据通信 
