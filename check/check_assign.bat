@@ -22,7 +22,7 @@ adb devices
 adb shell input keyevent 224
 adb shell screencap -p /sdcard/check_assign.png
 ping /n 2 /w 1000 localhost > nul
-adb pull /sdcard/check_in_res.png
+adb pull /sdcard/check_assign.png
 ping /n 2 /w 1000 localhost > nul
 adb shell input keyevent 26
 
