@@ -1,8 +1,8 @@
 :: schtasks /create /tn check_assign /st 0:00 /sc DAILY /tr %~dp0check_assign.bat
 :: schtasks /Query /tn check_assign
 :: schtasks /delete /tn check_assign
-git pull
 cd /d %~dp0
+git pull
 
 :: set /a rand_minute=%RANDOM% %% 50 + 10 
 :: set /a rand_sec=%RANDOM% %% 50 + 10 
