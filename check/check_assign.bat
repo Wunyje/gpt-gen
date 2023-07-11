@@ -17,6 +17,12 @@ set /a check_out_rand_minute=%RANDOM% %% 50 + 10
 set /a check_out_rand_sec=%RANDOM% %% 50 + 10 
 schtasks /create /tn check_out_task /st 21:%check_out_rand_minute%:%check_out_rand_sec% /sc DAILY /tr %~dp0check_out.bat  < Y.txt
 
+adb connect 192.168.8.191
+adb shell screencap -p /sdcard/check_assign.png
+ping /n 2 /w 1000 localhost > nul
+adb pull /sdcard/check_in_res.png
+ping /n 2 /w 1000 localhost > nul
+rem 截图成功打卡图片到电脑
 
 git add --all
 git commit -m "07:%check_in_rand_minute%:%check_in_rand_sec%  21:%check_out_rand_minute%:%check_out_rand_sec%"
