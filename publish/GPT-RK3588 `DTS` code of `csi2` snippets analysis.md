@@ -229,6 +229,38 @@ On this page, there are six `dts` or `dtsi` files related to the Rockchip RK3588
 		status = "disabled";
 	};
 
+	mipi_dcphy0: phy@feda0000 {
+		compatible = "rockchip,rk3588-mipi-dcphy";
+		reg = <0x0 0xfeda0000 0x0 0x10000>;
+		rockchip,grf = <&mipidcphy0_grf>;
+		clocks = <&cru PCLK_MIPI_DCPHY0>,
+			 <&cru CLK_USBDPPHY_MIPIDCPPHY_REF>;
+		clock-names = "pclk", "ref";
+		resets = <&cru SRST_M_MIPI_DCPHY0>,
+			 <&cru SRST_P_MIPI_DCPHY0>,
+			 <&cru SRST_P_MIPI_DCPHY0_GRF>,
+			 <&cru SRST_S_MIPI_DCPHY0>;
+		reset-names = "m_phy", "apb", "grf", "s_phy";
+		#phy-cells = <0>;
+		status = "disabled";
+	};
+
+	mipi_dcphy1: phy@fedb0000 {
+		compatible = "rockchip,rk3588-mipi-dcphy";
+		reg = <0x0 0xfedb0000 0x0 0x10000>;
+		rockchip,grf = <&mipidcphy1_grf>;
+		clocks = <&cru PCLK_MIPI_DCPHY1>,
+			 <&cru CLK_USBDPPHY_MIPIDCPPHY_REF>;
+		clock-names = "pclk", "ref";
+		resets = <&cru SRST_M_MIPI_DCPHY1>,
+			 <&cru SRST_P_MIPI_DCPHY1>,
+			 <&cru SRST_P_MIPI_DCPHY1_GRF>,
+			 <&cru SRST_S_MIPI_DCPHY1>;
+		reset-names = "m_phy", "apb", "grf", "s_phy";
+		#phy-cells = <0>;
+		status = "disabled";
+	};
+
 	csi2_dphy0_hw: csi2-dphy0-hw@fedc0000 {
 		compatible = "rockchip,rk3588-csi2-dphy-hw";
 		reg = <0x0 0xfedc0000 0x0 0x8000>;
@@ -259,7 +291,7 @@ On this page, there are six `dts` or `dtsi` files related to the Rockchip RK3588
 #include <dt-bindings/pinctrl/rockchip.h>
 ```
 
-- `rockchip_dts\rockchip\rp-camera-dphy1-ov13855.dtsi`: This file describes the configuration of a camera module that uses the OV13855 sensor and the DW9763 VCM driver on the CSI2 DPHY1 interface. It defines some properties for the I2C bus, power domain, pinctrl, GRF, GPIOs, clocks, resets, lens focus, ports, and endpoints.
+- `rockchip_dts\rockchip\rp-camera-dphy1-ov13855.dtsi`: This file describes the configuration of a camera module that uses the OV13855 sensor and the DW9763 VCM driver on the CSI2 DPHY1 interface. It defines some properties for the I2C bus, power domain, pinctrl, GRF, GPIOs, clocks, resets, lens focus, ports, and endpoints. There are three other ov13855's dts files: `rp-camera-dcphy0-ov13855.dtsi`, `rp-camera-dphy0-ov13855.dtsi` and `rp-camera-dphy1-ov13855.dtsi`.
 ```dts
 &i2c3 {
 	status = "okay";
@@ -402,27 +434,77 @@ On this page, there are six `dts` or `dtsi` files related to the Rockchip RK3588
 	};
 };
 ```
+## Short summary
+- `csi2_dphyN` and `csi2_dcphyN` are the device tree nodes that represent the MIPI CSI2 DPHY and DCPHY interfaces, respectively. They are compatible with the `rockchip,rk3568-csi2-dphy` and `rockchip,rk3588-csi2-dcphy` drivers, respectively. They have a property called `rockchip,hw` that points to the corresponding hardware node (`csi2_dphyN_hw` or `mipi_dcphyN`). They also have a `ports` sub-node that defines the input and output endpoints for the DPHY or DCPHY interface. For `csi2_dphyN`, there are **six** different indices: 0, 1, 2, 3, 4, and 5. For `csi2_dcphyN`, there are **two** different indices: 0 and 1.
+- `mipiN_csi` is the device tree node that represents the MIPI CSI2 host controller. It is compatible with the `rockchip,rk3588-mipi-csi2` driver. It has a property called `reg` that specifies the base address and size of the CSI2 host controller registers. It also has a `ports` sub-node that defines the input and output endpoints for the CSI2 host controller. For `mipiN_csi`, there are **six** different indices: 0, 1, 2, 3, 4, and 5.
+- `csi2_dphyN_hw` and `mipi_dcphyN` are the device tree nodes that represent the hardware configuration of the MIPI CSI2 DPHY and DCPHY interfaces, respectively. They are compatible with the `rockchip,rk3588-csi2-dphy-hw` and `rockchip,rk3588-mipi-dcphy` drivers, respectively. They have properties such as `reg`, `clocks`, `resets`, and `rockchip,grf` that specify the register address, clock sources, reset signals, and GRF registers for the DPHY or DCPHY interface. For `csi2_dphyN_hw`, there are **two** different indices: 0 and 1. For `mipi_dcphyN`, there are **two** different indices: 0 and 1.
 
-## New Bing's Answer on "relate the part of `csi2` within them and give the introduction about different `csi2` related componets and their relations"
+To summarize, the relationship between these nodes is that each DPHY or DCPHY interface has a corresponding hardware node and a host controller node, and they are connected by endpoints in their ports sub-nodes. For example, in this page, there is a camera module that uses the OV13855 sensor on the CSI2 DPHY1 interface. The device tree nodes for this configuration are:
 
-CSI2 stands for Camera Serial Interface 2, which is a standard interface for connecting cameras to processors or display devices. It uses a high-speed serial bus called MIPI D-PHY to transmit image data and control signals. The RK3588 SoC supports up to six CSI2 interfaces, each with four data lanes and one clock lane. The CSI2 interfaces can be configured to work in different modes, such as full mode, split mode, or dual mode, depending on the number of data lanes and the resolution of the camera sensor.
+- `csi2_dphy1_hw`: The hardware node for CSI2 DPHY1.
+- `csi2_dphy3`: The device node for CSI2 DPHY1 in full mode.
+- `mipi4_csi2`: The device node for MIPI CSI2 host controller 4.
+- `ov13855_3`: The device node for OV13855 sensor.
+- The endpoints that connect these nodes are:
+    - `<&ov13855_out3>`: The output endpoint of OV13855 sensor.
+    - `<&mipi_in_ucam3>`: The input endpoint of CSI2 DPHY1.
+    - `<&csidphy1_out>`: The output endpoint of CSI2 DPHY1.
+    - `<&mipi4_csi2_input>`: The input endpoint of MIPI CSI2 host controller 4.
+    - `<&mipi4_csi2_output>`: The output endpoint of MIPI CSI2 host controller 4.
 
-The files on this page contain some definitions and configurations for the CSI2 interfaces and their related components on the RK3588 evaluation board. Here are some of the main components and their relations:
+## Questions
+### 1 Are 6 `csi2_dphyN` corresponding to 6 `mipiN_csi`?
+No, the 6 `csi2_dphyN` are not corresponding to the 6 `mipiN_csi`. The `csi2_dphyN` are the device nodes for the MIPI CSI2 DPHY interfaces, which are compatible with the `rockchip,rk3568-csi2-dphy` driver. The `mipiN_csi` are the device nodes for the MIPI CSI2 host controller, which are compatible with the `rockchip,rk3588-mipi-csi2` driver. The DPHY interfaces and the host controller are different components of the MIPI CSI2 protocol stack, and they have different functions and properties. The DPHY interfaces are responsible for converting the parallel data from the sensor into serial data for transmission, while the host controller is responsible for receiving, decoding, and processing the serial data from the DPHY interfaces. The DPHY interfaces and the host controller are connected by endpoints in their ports sub-nodes, but they do not have a one-to-one correspondence. For example, in this page, there is a camera module that uses the OV13855 sensor on the CSI2 DPHY1 interface. The device tree nodes for this configuration are:
 
-- `csi2_dphy0_hw` and `csi2_dphy1_hw`: These are the hardware nodes that describe the physical layer (PHY) of the CSI2 interfaces. They define some properties such as the register address, clock, reset, GRF, and sys_grf. They also include other files that contain some pinctrl settings for the VCCIO3 domain.
-- `csi2_dphy0`, `csi2_dphy1`, `csi2_dphy2`, `csi2_dphy3`, `csi2_dphy4`, and `csi2_dphy5`: These are the logical nodes that describe the device layer (DL) of the CSI2 interfaces. They specify which hardware node they are using (`rockchip,hw`) and their status (`status`). They also have ports that connect to other endpoints, such as the CSI2 host or the camera sensor.
-- `csi2dcphy0` and `csi2_dcphy1`: They are from `rockchip_dts\rockchip\rk3588s.dtsi`
-- `mipi0_csi2`, `mipi1_csi2`, `mipi2_csi2`, `mipi3_csi2`, `mipi4_csi2`, and `mipi5_csi2`: These are the nodes that describe the CSI2 host controller, which is responsible for receiving and processing the image data from the camera sensor. They define some properties such as the register address, interrupt, clock, reset, and status. They also have ports that connect to other endpoints, such as the CSI2 DPHY or the CIF MIPI. 
-- `rkcif_mipi_lvds0`, `rkcif_mipi_lvds1`, `rkcif_mipi_lvds2`, `rkcif_mipi_lvds3`, `rkcif_mipi_lvds4`, and `rkcif_mipi_lvds5`: These are the nodes that describe the CIF MIPI module, which is a video capture device that can convert MIPI signals to parallel or LVDS signals. They define some properties such as the power domain and status. They also have ports that connect to other endpoints, such as the CSI2 host or the ISP.
-- `rkisp1_vir0`, `rkisp1_vir1`, `rkisp1_vir2`, and `rkisp1_vir3`: These are the nodes that describe the ISP virtual devices, which are used to provide a common interface for applications to access different ISP sub-devices. They define some properties such as the status. They also have ports that connect to other endpoints, such as the CIF MIPI or the SDITF.
-- `i2c3`: This is the node that describes the I2C bus that connects to some camera sensors and VCM drivers on the evaluation board. It defines some properties such as the pinctrl and status. It also has sub-nodes that describe each device on the bus, such as their compatible name, register address, clock, power domain, pinctrl, GPIOs, lens focus, port, and endpoint.
+    - `csi2_dphy1_hw`: The hardware node for CSI2 DPHY1.
+    - `csi2_dphy3`: The device node for CSI2 DPHY1 in full mode.
+    - `mipi4_csi2`: The device node for MIPI CSI2 host controller 4.
+    - `ov13855_3`: The device node for OV13855 sensor.
+    - The endpoints that connect these nodes are:
+        - `<&ov13855_out3>`: The output endpoint of OV13855 sensor[1].
+        - `<&mipi_in_ucam3>`: The input endpoint of CSI2 DPHY1.
+        - `<&csidphy1_out>`: The output endpoint of CSI2 DPHY1.
+        - `<&mipi4_csi2_input>`: The input endpoint of MIPI CSI2 host controller 4[2].
+        - `<&mipi4_csi2_output>`: The output endpoint of MIPI CSI2 host controller 4[3].
 
-One example of how these components are related is shown in this file: [rp-camera-dphy1-ov13855.dtsi]. This file describes a camera module that uses an OV13855 sensor and a DW9763 VCM driver on the CSI2 DPHY1 interface. The file includes some definitions for:
+    As you can see, the CSI2 DPHY1 interface is represented by two different device nodes (`csi2_dphy1_hw` and `csi2_dphy3`), and it is connected to a different host controller node (`mipi4_csi2`) than its index number.
 
-- The I2C devices (`dw9763_3` and `ov13855_3`) that communicate with the sensor and the VCM driver.
-- The CSI2 DPHY hardware node (`csi2_dphy1_hw`) that provides the physical layer for the interface.
-- The CSI2 DPHY logical node (`csi2_dphy3`) that provides the device layer for the interface in full mode.
-- The CSI2 host node (`mipi4_csi2`) that receives and processes the image data from the sensor.
-- The CIF MIPI node (`rkcif_mipi_lvds4`) that converts MIPI signals to parallel signals.
-- The ISP virtual device node (`rkisp1_vir0`) that provides a common interface for applications to access ISP sub-devices.
-- The ports and endpoints that connect these nodes together.
+#### 1.1 What are `mipiN_csi`'s relationship with `csi2_dphyN_hw` and `mipi_dcphyN`?
+The `mipiN_csi`'s relationship with `csi2_dphyN_hw` and `mipi_dcphyN` are as follows:
+
+    - The `mipiN_csi` have a property called `reg` that specifies the base address and size of the CSI2 host controller registers. They also have a property called `rockchip,hw` that points to the corresponding hardware node (`csi2_dphyN_hw` or `mipi_dcphyN`). The hardware node contains some properties such as `reg`, `clocks`, `resets`, and `rockchip,grf` that specify the register address, clock sources, reset signals, and GRF registers for the DPHY or DCPHY interface.
+    - The `mipiN_csi` have a `ports` sub-node that defines the input and output endpoints for the CSI2 host controller. The input endpoint is connected to the output endpoint of either a DPHY or a DCPHY interface, depending on whether the sensor uses MIPI CSI-2 or MIPI C-PHY protocol. The output endpoint is connected to the input endpoint of another device node, such as a RKISP1 or a RKVDEC.
+    - For example, in this page, there is a device node for MIPI CSI2 host controller 0 (`mipi0_csi2`). It has the following properties and ports:
+
+        - `reg = <0x0 0xfdd10000 0x0 0x10000>`: This means that the base address of the CSI2 host controller 0 registers is 0xfdd10000 and the size is 0x10000 bytes.
+        - `rockchip,hw = <&csi2_dcphy0>`: This means that the hardware node for this host controller is `csi2_dcphy0`, which represents a MIPI C-PHY interface compatible with the `rockchip,rk3588-csi2-dcphy` driver[4][5].
+        - `<&mipi0_csi2_input>`: This is the input endpoint of MIPI CSI2 host controller 0. It is connected to the output endpoint of `csi2_dcphy0`, which is `<&csidcphy0_out>`.
+        - `<&mipi0_csi2_output>`: This is the output endpoint of MIPI CSI2 host controller 0[6]. It is connected to the input endpoint of `rkcif_mipi_lvds0`, which is `<&cif_mipi_in0>`.
+
+#### 1.2 Consider the text below, what is this refering to in `dts`?
+ ```
+ MIPI CSI 输入支持 6 路 MIPI CSI 摄像头输入
+ 支持2路MIPI CSI 4L，分辨率最大支持1080P@60，每路MIPI CSI 4L均可配置为支持2路最大支持1080P@30及720P@60分辨率。向下兼容RK3588硬件支持的所有分辨率。 
+ 支持4路MIPI CSI 2L，分辨率最大支持1080P@30及720P@60分辨率。 
+ ```
+The text you provided is in Chinese, and it describes the MIPI CSI input support for the RK3588 SoC. It says that the RK3588 supports 6 MIPI CSI camera inputs:
+
+    - It supports 2 MIPI CSI 4L, which can support up to 1080P@60 resolution. Each MIPI CSI 4L can be configured to support 2 channels with up to 1080P@30 or 720P@60 resolution. It is backward compatible with all resolutions supported by the RK3588 hardware.
+    - It supports 4 MIPI CSI 2L, which can support up to 1080P@30 or 720P@60 resolution.
+
+In the dts file, this is referring to the following device nodes and properties:
+
+- `csi2_dphyN` and `csi2_dcphyN`: These are the device nodes for the MIPI CSI2 DPHY and DCPHY interfaces, respectively. They have a property called `data-lanes` that specifies the number of data lanes used by the sensor. For example, `data-lanes = <1 2 3 4>` means that the sensor uses 4 data lanes[^7^][7]. The DPHY interfaces support MIPI CSI-2 protocol, while the DCPHY interfaces support MIPI C-PHY protocol.
+- `mipiN_csi`: These are the device nodes for the MIPI CSI2 host controller. They have a property called `reg` that specifies the base address and size of the host controller registers. For example, `reg = <0x0 0xfdd10000 0x0 0x10000>` means that the base address of the host controller registers is 0xfdd10000 and the size is 0x10000 bytes.
+- The endpoints that connect these nodes are defined in their ports sub-nodes. For example, `<&mipi_in_ucam3>` is the input endpoint of CSI2 DPHY1, and `<&mipi4_csi2_input>` is the input endpoint of MIPI CSI2 host controller 4.
+
+#### 1.3 What are `mipiN_csi`'s relationship with `csi2_dphyN` and `csi2_dcphyN`?
+In the dts file, this is referring to the following device nodes and properties:
+
+    - `csi2_dphyN` and `csi2_dcphyN`: These are the device nodes for the MIPI CSI2 DPHY and DCPHY interfaces, respectively. They have a property called `data-lanes` that specifies the number of data lanes used by the sensor. For example, `data-lanes = <1 2 3 4>` means that the sensor uses 4 data lanes[7]. The DPHY interfaces support MIPI CSI-2 protocol, while the DCPHY interfaces support MIPI C-PHY protocol.
+    - `mipiN_csi`: These are the device nodes for the MIPI CSI2 host controller. They have a property called `reg` that specifies the base address and size of the host controller registers. For example, `reg = <0x0 0xfdd10000 0x0 0x10000>` means that the base address of the host controller registers is 0xfdd10000 and the size is 0x10000 bytes.
+    - The endpoints that connect these nodes are defined in their ports sub-nodes. For example, `<&mipi_in_ucam3>` is the input endpoint of CSI2 DPHY1, and `<&mipi4_csi2_input>` is the input endpoint of MIPI CSI2 host controller 4.
+
+The `mipiN_csi` nodes represent the MIPI CSI2 host controllers, while the `csi2_dphyN` and `csi2_dcphyN` nodes represent the MIPI CSI2 DPHY and DCPHY interfaces, respectively. The DPHY and DCPHY interfaces are responsible for converting the parallel data from the sensor into serial data for transmission, while the host controller is responsible for receiving, decoding, and processing the serial data from the DPHY or DCPHY interfaces.
+
+The `mipiN_csi` nodes are connected to either a `csi2_dphyN` or a `csi2_dcphyN` node through their respective input and output endpoints defined in their `ports` sub-nodes. For example, if a camera sensor uses the MIPI CSI-2 protocol, its output endpoint would be connected to the input endpoint of a `csi2_dphyN` node. The output endpoint of that `csi2_dphyN` node would then be connected to the input endpoint of a `mipiN_csi` node. On the other hand, if a camera sensor uses the MIPI C-PHY protocol, its output endpoint would be connected to the input endpoint of a `csi2_dcphyN` node, which would then be connected to a `mipiN_csi` node in a similar manner.
