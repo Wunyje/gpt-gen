@@ -23,6 +23,9 @@ adb  -s 192.168.8.191:5555 shell input tap 125 1415
 rem 点击【考勤打卡】
 ping /n 21 /w 1000 localhost > nul
 
+adb  -s 192.168.8.191:5555 shell input tap 530 1360
+rem 点击上下班打卡
+ping /n 5 /w 1000 localhost > nul
 
 adb  -s 192.168.8.191:5555 shell screencap -p /sdcard/check_in_res.png
 ping /n 2 /w 1000 localhost > nul
