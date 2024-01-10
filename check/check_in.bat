@@ -12,8 +12,8 @@ rem 点亮屏幕
 
 adb  -s 192.168.8.191:5555 shell am start -n com.alibaba.android.rimet/com.alibaba.android.rimet.biz.LaunchHomeActivity
 rem 找到钉钉应用，并打开。
-ping /n 6 /w 1000 localhost > nul
-rem 等待6秒%
+ping /n 10 /w 1000 localhost > nul
+rem 等待10秒%
 
 adb  -s 192.168.8.191:5555 shell input tap 550 2200
 rem 进入钉钉后，点击:【开源网安】
