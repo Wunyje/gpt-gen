@@ -2,7 +2,6 @@ cd /d %~dp0
 chcp 65001
 git pull
 
-adb connect 192.168.8.191
 rem WiFi连接手机
 
 adb devices
