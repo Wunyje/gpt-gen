@@ -1,4 +1,4 @@
-:: schtasks /create /tn check_assign /st 0:00 /sc DAILY /tr %~dp0check_assign.bat
+:: schtasks /create /tn check_assign /st 00:00 /sc DAILY /tr %~dp0check_assign.bat
 :: schtasks /Query /tn check_assign
 :: schtasks /delete /tn check_assign
 cd /d %~dp0
