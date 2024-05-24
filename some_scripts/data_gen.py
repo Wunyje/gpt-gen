@@ -1,10 +1,16 @@
-# Open a binary file for writing
-with open('data_test.bin', 'wb') as file:
-    # Generate 256 segments of 32 bytes each
-    for i in range(1, 257):
-        # Convert the integer to a 256-bit binary representation
-        data = i.to_bytes(32, 'big')
-        # Write the binary data to the file
-        file.write(data)
+def main():
+    # Generate xdma_data_write.bin
+    with open('xdma_data_write.bin', 'wb') as f:
+        for i in range(1, 257):
+            # Convert the integer to a 256-bit binary representation in little-endian format
+            data = (i).to_bytes(32, byteorder='little')
+            f.write(data)
 
-print("Binary file created successfully.")
+    # Generate xdma_write_down.bin
+    with open('xdma_write_down.bin', 'wb') as f:
+        # Write 32 bytes of 0xff
+        data = b'\xff' * 32
+        f.write(data)
+
+if __name__ == "__main__":
+    main()
